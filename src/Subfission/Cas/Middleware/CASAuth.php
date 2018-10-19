@@ -10,6 +10,8 @@ class CASAuth
     protected $auth;
     protected $cas;
 
+    public $password = 'created-from-cas';
+
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
@@ -30,8 +32,9 @@ class CASAuth
             // Store the user credentials in a Laravel managed session
             session()->put('cas_user', $this->cas->user());
 
-            if (config('cas.cas_create_user')) {
-                $this->create_user();
+            if (config('cas.cas_associate_user')) {
+                $user = $this->create_user();
+                \Auth::loginUsingId($user->id);
             }
 
         } else {
@@ -53,7 +56,7 @@ class CASAuth
         if (! $user = User::where('email', '=', $email)->first()) {
             $user = User::create([
                 'name' => $this->cas->user(),
-                'password' => 'created-from-cas',
+                'password' => $this->password,
                 'email' => $email
             ]);
         }

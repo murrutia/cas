@@ -255,6 +255,11 @@ class CasManager {
 		if ( $url ) {
 			$params['url'] = $url;
 		}
+
+		if ($this->config['cas_associate_user']) {
+			\Auth::logout();
+		}
+
 		phpCAS::logout( $params );
 		exit;
 	}

@@ -173,7 +173,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'cas_create_user'      => env('CAS_CREATE_USER', false),
+    'cas_associate_user'      => env('CAS_ASSOCIATE_USER', false),
 
     'cas_email_extension'  => env('CAS_EMAIL_EXTENSION', 'myuniv.edu')  ,
 ];
